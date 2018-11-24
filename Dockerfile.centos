@@ -10,12 +10,15 @@ ENV JBOSS_HOME="${JBOSS_USER_HOME}/${PRODUCT}" \
 ENV PATH="${JBOSS_HOME}/bin:/tmp:${PATH}"
 USER ${JBOSS_USER}
 RUN sudo yum update --security -y \
- && sudo yum update -y \
- && sudo yum autoremove -y \
- && sudo yum clean all -y
+ && sudo yum update -y
 WORKDIR /tmp
 ADD --chown=jboss ./install.sh .
-RUN ( standalone.sh --admin-only & ( sudo chmod +x /tmp/install.sh && install.sh && sudo rm -rf /tmp/* ) )
+RUN ( standalone.sh --admin-only \
+      & ( sudo chmod +x /tmp/install.sh \
+          && install.sh \
+          && sudo yum autoremove -y \
+          && sudo yum clean all -y \
+          && sudo rm -rf /tmp/*  ) )
 WORKDIR ${JBOSS_USER_HOME}
 
 # ############################################### USAGE ##################################################

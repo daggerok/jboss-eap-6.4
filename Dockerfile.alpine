@@ -10,11 +10,15 @@ ENV JBOSS_HOME="${JBOSS_USER_HOME}/${PRODUCT}" \
 ENV PATH="${JBOSS_HOME}/bin:/tmp:${PATH}"
 USER ${JBOSS_USER}
 RUN ( sudo apk fix --no-cache || echo 'cannot fix.' ) \
- && ( sudo apk upgrade --no-cache || echo 'cannot upgrade.' ) \
- && ( sudo apk cache -v clean || echo 'cannot clean cache.' )
+ && ( sudo apk upgrade --no-cache || echo 'cannot upgrade.' )
+ && sudo rm -rf /tmp/*
 WORKDIR /tmp
 ADD --chown=jboss ./install.sh .
-RUN ( standalone.sh --admin-only & ( sudo chmod +x /tmp/install.sh && install.sh && sudo rm -rf /tmp/* ) )
+RUN ( standalone.sh --admin-only \
+      & ( sudo chmod +x /tmp/install.sh \
+          && install.sh \
+          && ( sudo apk cache -v clean || echo 'cannot clean cache.' ) \
+          && sudo rm -rf /tmp/* ) )
 WORKDIR ${JBOSS_USER_HOME}
 
 # ############################################### USAGE ##################################################
