@@ -6,7 +6,7 @@ ENV JBOSS_VERSION='jboss-eap-6.4'                                               
     JBOSS_USER='jboss'
 ENV ADMIN_USER='admin'                                                                                 \
     ADMIN_PASSWORD='Admin.123'                                                                         \
-    JBOSS_EAP_PATCH='6.4.0'                                                                            \
+    JBOSS_EAP_PATCH='6.4.1'                                                                            \
     JDK_VERSION='jdk1.8.0_191'                                                                         \
     JBOSS_USER_HOME="/home/${JBOSS_USER}"                                                              \
     DOWNLOAD_BASE_URL="https://github.com/daggerok/${JBOSS_VERSION}/releases/download"
@@ -52,7 +52,7 @@ WORKDIR ${JBOSS_USER_HOME}
 
 ############################################### USAGE ##################################################
 #                                                                                                      #
-# FROM daggerok/jboss-eap-6.4:6.4.0-centos                                                             #
+# FROM daggerok/jboss-eap-6.4:6.4.1-centos                                                             #
 #                                                                                                      #
 # # debug:                                                                                             #
 # ENV JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"        #
