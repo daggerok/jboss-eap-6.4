@@ -7,7 +7,7 @@ env:
   - DOCKER_IMAGE_NAME=jboss-eap-6.4
   - secure: bEHsROGNlBdNHBc2dY+iQ6UcE7rNNqlw5xYZLwIwUDTctTgrjU9+1drt9Ecr7lylWx8c1p44xCzqEB/NNqGXraYOatdeBco4WeUskYouA+jVUtUnNkdJmIo1BnRmmdCyuz2Thb5cE7eWPzfLs91M4pxuO0CDCwltqDl8xrwtTlJ+88FddTzxb0UvyOVGmrUJQWddMMUtaQMXqggh4cC+074WSwg50F/xKgvpHnwg6SEEqGrNEzqMO0Q4YozS+W+30dVjGSPZ/wSizlFGtQ5JyslnexnF4gl2drJZ/rKgxt4moH7bHckGNzZvmbcxpNmXnGNgM1g5JEaNRzcV0F8YLG6PEsm+IyiXW8InUdx7XuVmLx/jCl3URGEY751N4bMxGPgES+LJElCmbjcBZCcvA8lsUGErhOGlk6qE1rKdwFERyOhKnOFod43hc8HTjlBWYQR+ZiAbzCcbLVKSUDWMkJb9Ib7dVmqYOUjBcs7+DOORkV1f/aA7DPxP0c1q/+/9NTj9JCX+ZDRo48iSHvARCK7KPloXNE3OtpNpUTuNkSMSusbsKtKGEhBdwC4Jtyu+f2pZKDXANcK8NuqH5CIS+kb9NqBG8okU2cOC0NoWmwMKWepWg8x6CkQUjc2AgspnKS8NML+f1Hd1YPtM3CN6GGjNrh2HEWV5lv0R4SCw9Yk=
 install: true
-if: (tag ~= *-alpine) OR (tag ~= *-centos) OR (branch == master))
+if: tag ~= alpine$ OR tag ~= centos$ OR branch == master
 script:
 - docker build -t ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME} .
 - |
