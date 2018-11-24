@@ -7,6 +7,9 @@ Docker hub JBoss EAP 6.4 automation build based on centos7 / alpine3.8 images
 
 - [latest](https://github.com/daggerok/jboss-eap-6.4/blob/master/Dockerfile)
 
+- [6.4.4-alpine](https://github.com/daggerok/jboss-eap-6.4/blob/6.4.4-alpine/Dockerfile)
+- [6.4.4-centos](https://github.com/daggerok/jboss-eap-6.4/blob/6.4.4-centos/Dockerfile)
+
 - [6.4.3-alpine](https://github.com/daggerok/jboss-eap-6.4/blob/6.4.3-alpine/Dockerfile)
 - [6.4.3-centos](https://github.com/daggerok/jboss-eap-6.4/blob/6.4.3-centos/Dockerfile)
 
