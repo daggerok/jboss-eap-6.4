@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-#####################################################################################################
-# make sure your system has netstat package installed for JBoss healthcheck and this script working #
-# also do not forget to add ${JBOSS_HOME}/bin and /tmp folders to your ${PATH} environment variable #
-#####################################################################################################
-
 function waiting_for_jboss {
   for port in "9990" "9999" ; do
     while [[ $(sudo netstat -ltnp | grep ${port} | wc -l) -lt 1 ]] ; do sleep 1s ; done
