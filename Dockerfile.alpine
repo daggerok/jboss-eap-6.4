@@ -12,8 +12,8 @@ ENV JBOSS_HOME="${JBOSS_USER_HOME}/${JBOSS_VERSION}"                            
     PATCHES_BASE_URL="${DOWNLOAD_BASE_URL}/${JBOSS_EAP_PATCH}"
 ENV PATH="${JBOSS_HOME}/bin:/tmp:${PATH}"
 USER root
-RUN ( apk fix     --no-cache || echo 'cannot fix.' )                                                && \
-    ( apk upgrade --no-cache || echo 'cannot upgrade.' )                                            && \
+RUN ( apk fix     --no-cache || echo 'cannot fix.'         )                                        && \
+    ( apk upgrade --no-cache || echo 'cannot upgrade.'     )                                        && \
     ( apk cache   -v   clean || echo 'cannot clean cache.' )                                        && \
       apk add     --no-cache --update --upgrade                                                        \
                   busybox-suid bash wget ca-certificates unzip sudo openssh-client shadow           && \
@@ -50,12 +50,12 @@ WORKDIR ${JBOSS_USER_HOME}
 #    JAVA_OPTS='-Djava.net.preferIPv4Stack=true'
 #WORKDIR /tmp
 #ADD --chown=jboss-eap-6.4 ./src/install.sh .
-#RUN ( sudo apk fix     --no-cache || echo 'cannot fix.' )                                             \
-# && ( sudo apk upgrade --no-cache || echo 'cannot upgrade.' )                                         \
+#RUN ( sudo apk fix     --no-cache || echo 'cannot fix.'         )                                     \
+# && ( sudo apk upgrade --no-cache || echo 'cannot upgrade.'     )                                     \
 # && ( sudo apk cache   -v   clean || echo 'cannot clean cache.' )                                     \
 # && sudo rm -rf /var/cache/apk /var/lib/apk /etc/apk/cache                                            \
 # && ( standalone.sh --admin-only                                                                      \
-#      & ( chmod 755 /tmp/install.sh && install.sh ) )
+#        & ( chmod 755 /tmp/install.sh && install.sh && rm -rf /tmp/install.sh ) )
 #WORKDIR ${JBOSS_USER_HOME}
 
 ################################################ USAGE #################################################
@@ -69,7 +69,7 @@ WORKDIR ${JBOSS_USER_HOME}
 # # health-check:                                                                                      #
 # HEALTHCHECK --timeout=1s \                                                                           #
 #             --retries=33 \                                                                           #
-#             CMD test `netstat -ltnp|grep 9990|wc -l` -ge 1 || exit 1                                 #
+#             CMD test `netstat -ltnp | grep 9990 | wc -l` -ge 1 || exit 1                             #
 # # or:                                                                                                #
 # HEALTHCHECK --timeout=1s \                                                                           #
 #             --retries=33 \                                                                           #

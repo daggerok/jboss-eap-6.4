@@ -52,7 +52,7 @@ WORKDIR ${JBOSS_USER_HOME}
 
 ############################################### USAGE ##################################################
 #                                                                                                      #
-# FROM daggerok/jboss-eap-6.4:6.4.0                                                                    #
+# FROM daggerok/jboss-eap-6.4:6.4.0-centos                                                             #
 #                                                                                                      #
 # # debug:                                                                                             #
 # ENV JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"        #
@@ -61,7 +61,7 @@ WORKDIR ${JBOSS_USER_HOME}
 # # health check:                                                                                      #
 # HEALTHCHECK --timeout=1s \                                                                           #
 #             --retries=33 \                                                                           #
-#             CMD test `netstat -ltnp|grep 9990|wc -l` -ge 1 || exit 1                                 #
+#             CMD test `netstat -ltnp | grep 9990 | wc -l` -ge 1 || exit 1                             #
 # # or:                                                                                                #
 # HEALTHCHECK --timeout=1s \                                                                           #
 #             --retries=33 \                                                                           #
