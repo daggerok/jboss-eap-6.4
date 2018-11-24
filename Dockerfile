@@ -18,9 +18,9 @@ RUN ( standalone.sh --admin-only \
       & ( sudo chmod +x /tmp/install.sh && install.sh && rm -rf /tmp/install.sh ) )
 WORKDIR ${JBOSS_USER_HOME}
 
-# ################################################ USAGE #################################################
+# ############################################### USAGE ##################################################
 # #                                                                                                      #
-# # FROM daggerok/jboss-eap-6.4:6.4.3-alpine                                                             #
+# # FROM daggerok/jboss-eap-6.4:6.4.4-alpine                                                             #
 # #                                                                                                      #
 # # # debug:                                                                                             #
 # # ENV JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"        #
