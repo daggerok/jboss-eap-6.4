@@ -6,10 +6,10 @@ ENV JBOSS_VERSION='jboss-eap-6.4'                                               
     JBOSS_USER='jboss'
 ENV ADMIN_USER='admin'                                                                                 \
     ADMIN_PASSWORD='Admin.123'                                                                         \
-    JBOSS_EAP_PATCH='6.4.1'                                                                            \
     JDK_VERSION='jdk1.8.0_191'                                                                         \
     JBOSS_USER_HOME="/home/${JBOSS_USER}"                                                              \
-    DOWNLOAD_BASE_URL="https://github.com/daggerok/${JBOSS_VERSION}/releases/download"
+    DOWNLOAD_BASE_URL="https://github.com/daggerok/${JBOSS_VERSION}/releases/download"                 \
+    JBOSS_EAP_PATCH='6.4.2'
 ENV JBOSS_HOME="${JBOSS_USER_HOME}/${JBOSS_VERSION}"                                                   \
     ARCHIVES_BASE_URL="${DOWNLOAD_BASE_URL}/archives"                                                  \
     PATCHES_BASE_URL="${DOWNLOAD_BASE_URL}/${JBOSS_EAP_PATCH}"
@@ -52,7 +52,7 @@ WORKDIR ${JBOSS_USER_HOME}
 
 ############################################### USAGE ##################################################
 #                                                                                                      #
-# FROM daggerok/jboss-eap-6.4:6.4.1-centos                                                             #
+# FROM daggerok/jboss-eap-6.4:6.4.2-centos                                                             #
 #                                                                                                      #
 # # debug:                                                                                             #
 # ENV JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"        #
@@ -68,6 +68,6 @@ WORKDIR ${JBOSS_USER_HOME}
 #             CMD wget -q --spider http://127.0.0.1:8080/my-service/health || exit 1                   #
 #                                                                                                      #
 # # multi deployment:                                                                                  #
-# COPY --chown=jboss ./path/to/*.war ./and/others/*.war ${JBOSS_HOME}/standalone/deployments/          #
+# COPY --chown=jboss ./path/to/apps/*.war ./path/to/libs/*.war ${JBOSS_HOME}/standalone/deployments/   #
 #                                                                                                      #
 ########################################################################################################
