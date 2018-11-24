@@ -1,11 +1,14 @@
 # jboss-eap-6.4 [![Build Status](https://travis-ci.org/daggerok/jboss-eap-6.4.svg?branch=master)](https://travis-ci.org/daggerok/jboss-eap-6.4)
-Docker hub JBoss EAP 6.4 automation build based on centos7 / alpine3.8 images
+Patched JBoss EAP 6.4 (including 6.4.9 patch) Docker automation build based on centos7 / alpine3.8 images
 
 [daggerok/jboss-eap-6.4](https://hub.docker.com/r/daggerok/jboss-eap-6.4/)
 
 ## tags
 
 - [latest](https://github.com/daggerok/jboss-eap-6.4/blob/master/Dockerfile)
+
+- [6.4.9-alpine](https://github.com/daggerok/jboss-eap-6.4/blob/6.4.9-alpine/Dockerfile)
+- [6.4.9-centos](https://github.com/daggerok/jboss-eap-6.4/blob/6.4.9-centos/Dockerfile)
 
 - [6.4.5-alpine](https://github.com/daggerok/jboss-eap-6.4/blob/6.4.5-alpine/Dockerfile)
 - [6.4.5-centos](https://github.com/daggerok/jboss-eap-6.4/blob/6.4.5-centos/Dockerfile)
@@ -32,7 +35,7 @@ Docker hub JBoss EAP 6.4 automation build based on centos7 / alpine3.8 images
 ```Dockerfile
 
 FROM daggerok/jboss-eap-6.4:6.4.5-alpine
-HEALTHCHECK --timeout=2s --retries=22 \
+HEALTHCHECK --timeout=1s --retries=99 \
         CMD wget -q --spider http://127.0.0.1:8080/my-service/health \
          || exit 1
 ADD ./target/*.war ${JBOSS_HOME}/standalone/deployments/my-service.war
