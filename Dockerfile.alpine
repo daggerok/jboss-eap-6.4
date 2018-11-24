@@ -1,7 +1,7 @@
 FROM openjdk:8u181-jdk-alpine3.8
 LABEL MAINTAINER='Maksim Kostromin <daggerok@gmail.com>'
 ENV JBOSS_VERSION='jboss-eap-6.4'                                                                      \
-    JBOSS_EAP_PATCH='6.4.0'                                                                            \
+    JBOSS_EAP_PATCH='6.4.1'                                                                            \
     JBOSS_USER='jboss'
 ENV ADMIN_USER='admin'                                                                                 \
     ADMIN_PASSWORD='Admin.123'                                                                         \
@@ -49,7 +49,7 @@ WORKDIR ${JBOSS_USER_HOME}
 #ENV PATH="${PATH}:${JBOSS_HOME}/bin:/tmp" \
 #    JAVA_OPTS='-Djava.net.preferIPv4Stack=true'
 #WORKDIR /tmp
-#ADD --chown=jboss-eap-6.4 ./src/install.sh .
+#ADD --chown=jboss ./src/install.sh .
 #RUN ( sudo apk fix     --no-cache || echo 'cannot fix.'         )                                     \
 # && ( sudo apk upgrade --no-cache || echo 'cannot upgrade.'     )                                     \
 # && ( sudo apk cache   -v   clean || echo 'cannot clean cache.' )                                     \
@@ -60,7 +60,7 @@ WORKDIR ${JBOSS_USER_HOME}
 
 ################################################ USAGE #################################################
 #                                                                                                      #
-# FROM daggerok/jboss-eap-6.4:6.4.0-alpine                                                             #
+# FROM daggerok/jboss-eap-6.4:6.4.1-alpine                                                             #
 #                                                                                                      #
 # # debug:                                                                                             #
 # ENV JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"        #
