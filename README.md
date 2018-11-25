@@ -65,7 +65,7 @@ COPY ./build/libs/*.war ./target/*.war ${JBOSS_HOME}/standalone/deployments/
 ```Dockerfile
 
 FROM daggerok/jboss-eap-6.4:latest
-ENV JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 "
+ENV JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
 EXPOSE 5005
 COPY ./target/*.war ${JBOSS_HOME}/standalone/deployments/
 
