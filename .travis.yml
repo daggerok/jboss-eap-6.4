@@ -15,11 +15,12 @@ if: tag ~= alpine$ OR tag ~= centos$ OR branch == master
 script:
 - docker system prune -af --volumes
 - docker build -t ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME} .
+- echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
 - |
   if [ "${TRAVIS_BRANCH}" == "master" ]; then
-    docker tag ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME} ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:latest
+    export IMAGE_TAG=latest
   else
-    docker tag ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME} ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${TRAVIS_BRANCH}
+    export IMAGE_TAG=${TRAVIS_BRANCH}
   fi
-- echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
-- docker push ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}
+- docker tag  ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME} ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}
+- docker push ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}
