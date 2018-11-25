@@ -43,7 +43,7 @@ Patched JBoss EAP 6.4 (including __6.4.21 patch__) Docker automation build based
 
 ```Dockerfile
 
-FROM daggerok/jboss-eap-6.4:6.4.20-alpine
+FROM daggerok/jboss-eap-6.4:6.4.21-alpine
 HEALTHCHECK --timeout=1s --retries=99 \
         CMD wget -q --spider http://127.0.0.1:8080/my-service/health \
          || exit 1
