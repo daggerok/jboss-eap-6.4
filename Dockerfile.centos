@@ -10,7 +10,8 @@ ENV JBOSS_HOME="${JBOSS_USER_HOME}/${PRODUCT}" \
 ENV PATH="${JBOSS_HOME}/bin:/tmp:${PATH}"
 USER ${JBOSS_USER}
 RUN sudo yum update --security -y \
- && sudo yum update -y
+ && sudo yum update -y  \
+ && sudo rm -rf /tmp/*
 WORKDIR /tmp
 ADD --chown=jboss ./install.sh .
 RUN ( standalone.sh --admin-only \
