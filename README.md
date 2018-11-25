@@ -1,5 +1,5 @@
 # jboss-eap-6.4 [![Build Status](https://travis-ci.org/daggerok/jboss-eap-6.4.svg?branch=master)](https://travis-ci.org/daggerok/jboss-eap-6.4)
-Patched JBoss EAP 6.4 (including 6.4.21 patch) Docker automation build based on centos7 / alpine3.8 images
+Patched JBoss EAP 6.4 (including __6.4.21 patch__) Docker automation build based on centos7 / alpine3.8 images
 
 [daggerok/jboss-eap-6.4](https://hub.docker.com/r/daggerok/jboss-eap-6.4/)
 
