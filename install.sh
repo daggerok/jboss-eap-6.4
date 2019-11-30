@@ -17,7 +17,7 @@ if [ "${JBOSS_EAP_PATCH}" != "6.4.0" ] ; then
     echo "Applying $(basename ./patches/${PATCH_FILENAME}) file..."
     INSTRUCTIONS_FILE="${PATCH_FILENAME}.instructions"
     # modification manual resolution problem solving:
-    if [[ ${PATCH_FILENAME} == *-6.2.5-patch.zip ]] ; then
+    if [[ ${PATCH_FILENAME} == *-6.4.19-patch.zip ]] ; then
       echo "connect
             patch apply ${PATCH_FILENAME} --override=bin/standalone.conf,bin/standalone.conf.bat
             shutdown --restart=true" > ${INSTRUCTIONS_FILE}
@@ -33,7 +33,7 @@ if [ "${JBOSS_EAP_PATCH}" != "6.4.0" ] ; then
 fi
 
 if [ -z ${KEEP_HISTORY} ] || [[ ! ${KEEP_HISTORY} =~ ^(keep|yes|true)$ ]] ; then
-  echo "Cleanup previous history before ${PATCH_FILENAME} will be applied..."
+  echo "Cleanup patches history..."
   jboss-cli.sh --commands="connect","/core-service=patching:ageout-history"
 fi
 
