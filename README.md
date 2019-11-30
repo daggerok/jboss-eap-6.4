@@ -53,7 +53,7 @@ HEALTHCHECK --retries=33 \
             --start-period=3s \
             CMD wget -q --spider http://127.0.0.1:8080/my-service/health || exit 1
 COPY --chown=jboss ./target/*.war ${JBOSS_HOME}/standalone/deployments/my-service.war
-# ...
+
 ```
 
 ### multi deployment
@@ -72,7 +72,7 @@ COPY --chown=jboss ./build/libs/*.war ./target/*.war ${JBOSS_HOME}/standalone/de
 FROM daggerok/jboss-eap-6.4:latest
 ENV JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
 EXPOSE 5005
-COPY --chown=jboss ./target/*.war ${JBOSS_HOME}/standalone/deployments/
+# ...
 
 ```
 
