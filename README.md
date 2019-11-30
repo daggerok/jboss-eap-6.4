@@ -1,11 +1,14 @@
 # jboss-eap-6.4 [![Build Status](https://travis-ci.org/daggerok/jboss-eap-6.4.svg?branch=master)](https://travis-ci.org/daggerok/jboss-eap-6.4)
-Patched JBoss EAP 6.4 (including __6.4.21 patch__) Docker automation build based on centos7 / alpine3.8 images
+Patched JBoss EAP 6.4 (including __6.4.22 patch__) Docker automation build based on centos8 / alpine3.9 images
 
-[daggerok/jboss-eap-6.4](https://hub.docker.com/r/daggerok/jboss-eap-6.4/)
+This image is located on [docker hun](https://hub.docker.com/r/daggerok/jboss-eap-6.4/) as `daggerok/jboss-eap-6.4`
 
 ## tags
 
 - [latest](https://github.com/daggerok/jboss-eap-6.4/blob/master/Dockerfile)
+
+- [6.4.22-alpine](https://github.com/daggerok/jboss-eap-6.4/blob/6.4.22-alpine/Dockerfile)
+- [6.4.22-centos](https://github.com/daggerok/jboss-eap-6.4/blob/6.4.22-centos/Dockerfile)
 
 - [6.4.21-alpine](https://github.com/daggerok/jboss-eap-6.4/blob/6.4.21-alpine/Dockerfile)
 - [6.4.21-centos](https://github.com/daggerok/jboss-eap-6.4/blob/6.4.21-centos/Dockerfile)
@@ -43,19 +46,21 @@ Patched JBoss EAP 6.4 (including __6.4.21 patch__) Docker automation build based
 
 ```Dockerfile
 
-FROM daggerok/jboss-eap-6.4:6.4.21-alpine
-HEALTHCHECK --timeout=1s --retries=99 \
-        CMD wget -q --spider http://127.0.0.1:8080/my-service/health \
-         || exit 1
+FROM daggerok/jboss-eap-6.4:6.4.22-alpine
+HEALTHCHECK --retries=33 \
+            --timeout=1s \
+            --interval=1s \
+            --start-period=3s \
+            CMD wget -q --spider http://127.0.0.1:8080/my-service/health || exit 1
 ADD ./target/*.war ${JBOSS_HOME}/standalone/deployments/my-service.war
-
+# ...
 ```
 
 ### multi deployment
 
 ```Dockerfile
 
-FROM daggerok/jboss-eap-6.4:6.4.0-centos
+FROM daggerok/jboss-eap-6.4:6.4.22-centos
 COPY ./build/libs/*.war ./target/*.war ${JBOSS_HOME}/standalone/deployments/
 
 ```
@@ -76,3 +81,19 @@ _ports_
 - management: 9990, 9999
 - web http: 8080
 - https: 8443
+
+<!--
+
+git reset --hard origin/master
+git fetch -p -a --prune-tags --force --tags 
+
+git tag -d $tagName
+git push --delete origin $tagName
+
+git tag 6.4.22-centos
+git push origin --tags --force
+
+git tag 6.4.22-alpine
+git push origin --tags --force
+
+-->
