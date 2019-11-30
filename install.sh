@@ -14,11 +14,6 @@ if [ "${JBOSS_EAP_PATCH}" != "6.4.0" ] ; then
   wget -q -i "${PATCHES_BASE_URL}/index.txt" -P ./patches/ || echo "no patches found."
 
   for PATCH_FILENAME in $(ls ./patches/*.zip) ; do
-    if [ -z ${KEEP_HISTORY} ] || [[ ! ${KEEP_HISTORY} =~ ^(keep|yes|true)$ ]] ; then
-      echo "Cleanup previous history before ${PATCH_FILENAME} will be applied..."
-      jboss-cli.sh --commands="connect","/core-service=patching:ageout-history"
-    fi
-
     echo "Applying $(basename ./patches/${PATCH_FILENAME}) file..."
     INSTRUCTIONS_FILE="${PATCH_FILENAME}.instructions"
     # modification manual resolution problem solving:
@@ -35,6 +30,11 @@ if [ "${JBOSS_EAP_PATCH}" != "6.4.0" ] ; then
     rm -rf ${INSTRUCTIONS_FILE} ${PATCH_FILENAME}
     waiting_for_jboss
   done
+fi
+
+if [ -z ${KEEP_HISTORY} ] || [[ ! ${KEEP_HISTORY} =~ ^(keep|yes|true)$ ]] ; then
+  echo "Cleanup previous history before ${PATCH_FILENAME} will be applied..."
+  jboss-cli.sh --commands="connect","/core-service=patching:ageout-history"
 fi
 
 echo "Shutdown JBoss..."
