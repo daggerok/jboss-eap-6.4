@@ -1,7 +1,10 @@
 notifications:
   email: false
 git:
+  quiet: true
   depth: false
+os: linux
+arch: amd64
 services:
 - docker
 env:
