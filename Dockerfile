@@ -1,4 +1,4 @@
-FROM openjdk:8u212-jdk-alpine3.9
+FROM centos:centos8
 LABEL MAINTAINER="Maksim Kostromin <daggerok@gmail.com>"
 ENV PRODUCT="jboss-eap-6.4"                                                         \
     JBOSS_USER="jboss"
@@ -10,26 +10,24 @@ ENV ADMIN_USER="admin"                                                          
 ENV JBOSS_HOME="${JBOSS_USER_HOME}/${PRODUCT}"                                      \
     ARCHIVES_BASE_URL="${DOWNLOAD_BASE_URL}/archives"                               \
     PATCHES_BASE_URL="${DOWNLOAD_BASE_URL}/${JBOSS_EAP_PATCH}"
-ENV PATH="${JBOSS_HOME}/bin:/tmp:${PATH}"
+ENV PATH="${JBOSS_HOME}/bin:/tmp:${PATH}"                                           \
+    JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk"
 USER root
-RUN ( apk fix     --no-cache || echo "cannot fix."         )                                    && \
-    ( apk upgrade --no-cache || echo "cannot upgrade."     )                                    && \
-    ( apk cache    -v  clean || echo "cannot clean cache." )                                    && \
-      apk add     --no-cache --update --upgrade                                                    \
-            busybox-suid bash wget ca-certificates unzip sudo openssh-client shadow curl        && \
-    echo "${JBOSS_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers                                && \
-    sed -i "s/.*requiretty$/Defaults !requiretty/" /etc/sudoers                                 && \
-    addgroup --system -g 1001 -S ${JBOSS_USER}                                                  && \
-    adduser --system -h ${JBOSS_USER_HOME} -s /bin/ash -D -u 1001 ${JBOSS_USER} ${JBOSS_USER}   && \
+RUN yum update --security -y -q                                                                         && \
+    yum install -y -q                                                                                      \
+            wget ca-certificates unzip sudo openssh-clients zip net-tools curl java-1.8.0-openjdk-devel && \
+    echo "${JBOSS_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers                                        && \
+    groupadd --system --gid 1001 ${JBOSS_USER}                                                          && \
+    adduser --system -m -d ${JBOSS_USER_HOME} -s /sbin/bash -g ${JBOSS_USER} --uid 1001 ${JBOSS_USER}   && \
     usermod -a -G ${JBOSS_USER} ${JBOSS_USER}
 USER ${JBOSS_USER}
 EXPOSE 8080 8443 9990
-ENTRYPOINT ["/bin/ash", "-c"]
+ENTRYPOINT ["/bin/bash", "-c"]
 CMD ["${JBOSS_HOME}/bin/standalone.sh -b 0.0.0.0"]
 WORKDIR /tmp
 ADD --chown=jboss ./install.sh .
 RUN wget ${ARCHIVES_BASE_URL}/jboss-eap-6.4.0.zip                                                                                                  \
-          -q --no-cookies --no-check-certificate -O /tmp/jboss-eap-6.4.0.zip                                                                    && \
+         -q --no-cookies --no-check-certificate -O /tmp/jboss-eap-6.4.0.zip                                                                     && \
     unzip -q /tmp/jboss-eap-6.4.0.zip -d ${JBOSS_USER_HOME}                                                                                     && \
     add-user.sh ${ADMIN_USER} ${ADMIN_PASSWORD} --silent                                                                                        && \
     echo 'JAVA_OPTS="-Djava.io.tmpdir=/tmp -Djava.net.preferIPv4Stack=true -Djboss.bind.address=0.0.0.0 -Djboss.bind.address.management=0.0.0.0"   \
@@ -37,13 +35,15 @@ RUN wget ${ARCHIVES_BASE_URL}/jboss-eap-6.4.0.zip                               
     ( standalone.sh --admin-only                                                                                                                   \
       & ( sudo chmod +x /tmp/install.sh                                                                                                         && \
           install.sh                                                                                                                            && \
-          sudo apk del --no-cache --no-network --purge busybox-suid unzip openssh-client shadow                                                 && \
-          ( sudo rm -rf /tmp/* /var/cache/apk /var/lib/apk /etc/apk/cache || echo "cleanup!" ) ) )
+          rm -rf /tmp/install.sh                                                                                                                && \
+          sudo yum autoremove -y                                                                                                                && \
+          sudo yum clean all -y                                                                                                                 && \
+          ( sudo rm -rf /tmp/* /var/cache/yum || echo "something was not removed..." ) ) )
 WORKDIR ${JBOSS_USER_HOME}
 
 ############################################### USAGE ##################################################
 #                                                                                                      #
-# FROM daggerok/jboss-eap-6.4:6.4.22-alpine                                                            #
+# FROM daggerok/jboss-eap-6.4:6.4.22-centos                                                            #
 #                                                                                                      #
 # # debug:                                                                                             #
 # ENV JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"        #
