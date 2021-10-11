@@ -1,4 +1,4 @@
-# jboss-eap-6.4 [![Build Status](https://travis-ci.org/daggerok/jboss-eap-6.4.svg?branch=master)](https://travis-ci.org/daggerok/jboss-eap-6.4)
+# jboss-eap-6.4 [![CI](https://github.com/daggerok/jboss-eap-6.4/actions/workflows/ci.yaml/badge.svg)](https://github.com/daggerok/jboss-eap-6.4/actions/workflows/ci.yaml)
 Patched JBoss EAP 6.4 (including __6.4.22 patch__) Docker automation build based on centos8 / alpine3.9 images
 
 This image is located on [docker hun](https://hub.docker.com/r/daggerok/jboss-eap-6.4/) as `daggerok/jboss-eap-6.4`
